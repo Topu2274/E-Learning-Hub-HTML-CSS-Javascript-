@@ -1,0 +1,69 @@
+
+
+CREATE DATABASE learning_hub; 
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,          -- Unique identifier for each user
+    name VARCHAR(100) NOT NULL,                -- User's full name
+    email VARCHAR(100) NOT NULL UNIQUE,        -- User's email (unique to prevent duplicates)
+    password VARCHAR(255) NOT NULL,            -- Hashed password (255 chars for bcrypt hash)
+    role ENUM('student', 'teacher', 'admin') NOT NULL DEFAULT 'student', -- User role with restricted values
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP  -- Timestamp of account creation
+);
+
+
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    details TEXT NOT NULL,
+    img VARCHAR(255) NOT NULL,
+    link VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE saved_books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    book_id INT NOT NULL,
+    saved_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (book_id) REFERENCES books(id)
+);
+
+
+INSERT INTO books (category, title, author, details, img, link) VALUES
+-- IEEE Books
+('ieee', 'Demystifying Deep Learning: An Introduction to the Mathematics of Neural Networks', 'Douglas J. Santry', 'Discover how to train Deep Learning models by learning how to build real Deep Learning software libraries and verification software!', 'https://m.media-amazon.com/images/I/61DFCcm5BkL._AC_UL480_FMwebp_QL65_.jpg', 'https://www.amazon.com/s?k=Demystifying+Deep+Learning%3A+An+Introduction+to+the+Mathematics+of+Neural+Networks'),
+('ieee', 'Fundamentals of Computational Intelligence: Neural Networks, Fuzzy Systems, and Evolutionary Computation', 'James M. Keller, Derong Liu, David B. Fogel', 'Provides an in-depth and even treatment of the three pillars of computational intelligence and how they relate to one another.', 'https://m.media-amazon.com/images/I/610eoF2CX4L._SY466_.jpg', 'https://www.amazon.com/Fundamentals-Computational-Intelligence-Evolutionary-Computation/dp/1119214343/ref=sr_1_1?dib=eyJ2IjoiMSJ9.9tNNI_JV5C_IlrCNKkCOmA.1wHIymH3r13YaM7CwysKLNzEPJoap6AwwmDFHJ48MQI&dib_tag=se&keywords=Fundamentals+of+Computational+Intelligence%3A+Neural+Networks%2C+Fuzzy+Systems%2C+and+Evolutionary+Computation&qid=1741533721&sr=8-1'),
+('ieee', 'Engineered to Speak: Helping You Create and Deliver Engaging Technical Presentations', 'Alexa S. Chilcutt, Adam J. Brooks', 'Learn how to create and deliver engaging presentations in the technical domain.', 'https://m.media-amazon.com/images/I/51SS4izvlSL._SY466_.jpg', 'https://www.amazon.com/Engineered-Speak-Process-Driven-Professional-Communication/dp/1119474965/ref=sr_1_1?crid=24MWHH97T6NVR&dib=eyJ2IjoiMSJ9.GPlRKxCQyY6hIzoogmf86Q.1DCDCAPxZ79u66yd_-OvZ3-dUsInSh-TZ59xVUihO9Y&dib_tag=se&keywords=Engineered+to+Speak%3A+Helping+You+Create+and+Deliver+Engaging+Technical+Presentations&qid=1741533785&sprefix=engineered+to+speak+helping+you+create+and+deliver+engaging+technical+presentations%2Caps%2C302&sr=8-1'),
+
+-- AI Books
+('ai', 'Artificial Intelligence: A Modern Approach', 'Stuart Russell, Peter Norvig', 'A comprehensive book on AI theory and applications.', 'https://m.media-amazon.com/images/I/61nHC3YWZlL._SL1360_.jpg', 'https://www.amazon.com/Artificial-Intelligence-Modern-Approach/dp/0136042597'),
+('ai', 'The Hundred-Page Machine Learning Book', 'Andriy Burkov', 'A concise introduction to machine learning concepts.', 'https://m.media-amazon.com/images/I/41uPjEenkFL.jpg', 'https://www.amazon.com/Hundred-Page-Machine-Learning-Book/dp/199957950X'),
+('ai', 'Deep Learning', 'Ian Goodfellow, Yoshua Bengio, Aaron Courville', 'An in-depth book on deep learning algorithms and applications.', 'https://m.media-amazon.com/images/I/61AA6wv7ieL._SY445_SX342_.jpg', 'https://www.amazon.com/Deep-Learning-Adaptive-Computation-Machine/dp/0262035618'),
+
+-- Engineering Mathematics Books
+('math', 'Advanced Engineering Mathematics', 'Erwin Kreyszig', 'A widely used book covering various aspects of engineering mathematics, including differential equations, linear algebra, and vector calculus.', 'https://m.media-amazon.com/images/I/51cacwzYscL._SY445_SX342_.jpg', 'https://www.amazon.com/Advanced-Engineering-Mathematics-Erwin-Kreyszig/dp/0470458364'),
+('math', 'Higher Engineering Mathematics', 'B.S. Grewal', 'This book provides a thorough foundation in mathematics for engineers, covering calculus, matrices, differential equations, and more.', 'https://m.media-amazon.com/images/I/51BdEyV75pL._SY445_SX342_.jpg', 'https://www.amazon.com/Higher-Engineering-Mathematics-B-S-Grewal/dp/8193328493'),
+('math', 'Engineering Mathematics', 'K.A. Stroud', 'A step-by-step approach to solving mathematical problems for engineering students, covering algebra, trigonometry, and calculus.', 'https://m.media-amazon.com/images/I/516jVcqoLQL._SX342_SY445_.jpg', 'https://www.amazon.com/Engineering-Mathematics-K-Stroud/dp/1137031204'),
+
+-- Networking Books
+('networking', 'Computer Networking: A Top-Down Approach', 'James F. Kurose, Keith W. Ross', 'A comprehensive introduction to networking, covering layered architectures, protocols, and modern networking technologies.', 'https://m.media-amazon.com/images/I/41PRw50Qa-L._SX342_SY445_.jpg', 'https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149'),
+('networking', 'Data Communications and Networking', 'Behrouz A. Forouzan', 'An essential book on data communications, covering network protocols, TCP/IP, and network security concepts.', 'https://m.media-amazon.com/images/I/51Q4FQblduL._SX342_SY445_.jpg', 'https://www.amazon.com/Data-Communications-Networking-5th-Behrouz/dp/0073376221'),
+('networking', 'Computer Networks', 'Andrew S. Tanenbaum, David J. Wetherall', 'A detailed guide to networking principles, explaining protocols, architectures, and real-world networking challenges.', 'https://m.media-amazon.com/images/I/41bdzcfQKbL._SX342_SY445_.jpg', 'https://www.amazon.com/Computer-Networks-5th-Andrew-Tanenbaum/dp/0132126958'),
+
+-- Robotics Books
+('robotics', 'Introduction to Autonomous Robots', 'Nikolaus Correll, Bradley Hayes, and David Wettergreen', 'A comprehensive introduction to the fundamental concepts of robotics, including perception, control, and planning.', 'https://m.media-amazon.com/images/I/717FEAdg3dL._SY385_.jpg', 'https://www.amazon.com/Introduction-Autonomous-Robots-Mechanisms-Algorithms/dp/0262047551/ref=sr_1_1?dib=eyJ2IjoiMSJ9.j4fGxV_qWI2OfGJAG2HM7PdBW4t9KoP1nN6XBCZcR_bazFJkGDteNtUMfUZlN48hxEbVy7Am-VAZ8CkhZiGQ3JKv5sjCbyRKIn1E4Qkv1jWgiAioU7yD5qShCR_YoBEM1NncuZMpaQGGrspT0U0eTnrwhWsHUeHPWKHYXghdavhYHm6VFXAhbXADN0oqp7ixuvmaPVRi0Nb4qtbrSPiZwrxbasZD2VDZqw-Wj-5lvyE.IYAPyQM-8ypKeVgOcvWF53K51bTiaOt9SUtFkXlQtFc&dib_tag=se&keywords=Introduction+to+Autonomous+Robots&qid=1741534957&sr=8-1'),
+('robotics', 'Robot Modeling and Control', 'Mark W. Spong, Seth Hutchinson, M. Vidyasagar', 'An essential resource for learning about kinematics, dynamics, and control of robotic systems.', 'https://m.media-amazon.com/images/I/71GsoV1YIsL._SY466_.jpg', 'https://www.amazon.com/Robot-Modeling-Control-Mark-Spong/dp/1119523990/ref=sr_1_1?crid=24TN9F40TUHKM&dib=eyJ2IjoiMSJ9.4AwfhMvsDEzQeofI34yuSl-wP_J-1GlJ00HVQ5dl-Vf9YAt46e5rrwbMA8FmKmlFVXHtL3sGadLo0y8DdNXnQtTh4ctJm_-1tJ9Ubh96xl6WaubQJ9onV2B-Bs8rVAl61hxziwwTnNrscBI6N6XWycnRfl2xIbL6OZE592vNTUW6C24_x961pNbGo8k8kUF8Dz5WWzGxdr6QOm4UfEpmaBcy851de3GN0Cn5VaOdQTA.QxGoD0qDvhRJJwMWnkAF6LI4f8nVh4D77So8kfsF1TQ&dib_tag=se&keywords=Robot+Modeling+and+Control&qid=1741535043&sprefix=robot+modeling+and+control%2Caps%2C840&sr=8-1'),
+('robotics', 'Probabilistic Robotics', 'Sebastian Thrun, Wolfram Burgard, Dieter Fox', 'A leading book on the probabilistic methods used in robotic perception and decision-making.', 'https://m.media-amazon.com/images/I/41KlEnTbxHL._SX342_SY445_.jpg', 'https://www.amazon.com/Probabilistic-Robotics-INTELLIGENT-ROBOTICS-AUTONOMOUS/dp/0262201623/ref=sr_1_1?crid=EB1VW5K2REC7&dib=eyJ2IjoiMSJ9.qwwDlERdIBCdn3lqPSWwp13VgHy8ISFSaM_TfkEZoJANSlhjqr8ebE300kT-BN6wIcmHqMmadcMVnXn45-fO1-CWkWB7XHZExy0UQ-X5LmncVIsRd2bN-KdZKD1hWETFNdh_89NzWIll78t7dQI9EOz9Hbhlsm4wdJELvVKQfq5-6xnePGcMsm1dz1NHJJ1cIjae62TUqGmv2v-Rwk9axM3LDgYhGJl96_bLpSBISjc.DbLG_Sg7C5TL4albG6rHolE7j1iNwLmxbkWQM7dBYzQ&dib_tag=se&keywords=Probabilistic+Robotics&qid=1741535086&sprefix=probabilistic+robotics%2Caps%2C602&sr=8-1'),
+
+-- Machine Learning Books
+('machine-learning', 'Machine Learning: A Probabilistic Perspective', 'Kevin P. Murphy', 'A comprehensive guide to probabilistic approaches in ML.', 'https://m.media-amazon.com/images/I/61NfFcHXGxL._SY385_.jpg', 'https://www.amazon.com/Machine-Learning-Probabilistic-Perspective-Computation/dp/0262018020'),
+('machine-learning', 'Deep Learning', 'Ian Goodfellow, Yoshua Bengio, Aaron Courville', 'A foundational book on deep learning concepts and applications.', 'https://m.media-amazon.com/images/I/A10G+oKN3LL._SL1500_.jpg', 'https://www.amazon.com/Deep-Learning-Adaptive-Computation-Machine/dp/0262035618'),
+('machine-learning', 'Pattern Recognition and Machine Learning', 'Christopher M. Bishop', 'An essential resource on statistical pattern recognition and ML.', 'https://m.media-amazon.com/images/I/61ECBlvkBCL._SY445_SX342_.jpg', 'https://www.amazon.com/Pattern-Recognition-Learning-Information-Statistics/dp/0387310738'),
+
+-- Programming Books
+('programming', 'Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 'A must-read book for software engineers that covers best practices in writing clean and maintainable code.', 'https://m.media-amazon.com/images/I/51E2055ZGUL._SY425_.jpg', 'https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882'),
+('programming', 'The Pragmatic Programmer: Your Journey To Mastery', 'Andrew Hunt, David Thomas', 'A classic book that teaches essential software development principles and best practices.', 'https://m.media-amazon.com/images/I/41as+WafrFL.jpg', 'https://www.amazon.com/Pragmatic-Programmer-journey-mastery-Anniversary/dp/0135957052'),
+('programming', 'You Don\'t Know JS', 'Kyle Simpson', 'An in-depth exploration of JavaScript, covering core concepts and advanced techniques.', 'https://m.media-amazon.com/images/I/51WIKlio9qL.jpg', 'https://www.amazon.com/You-Dont-Know-JS-Book/dp/B08CJD6L58');
